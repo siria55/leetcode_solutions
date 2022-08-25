@@ -1,26 +1,28 @@
 #include <cstdio>
 #include <vector>
 #include <string>
-#include <algorithm>
+#include <numeric>
 using namespace std;
 
 class Solution {
 public:
-    int findContentChildren(vector<int>& g, vector<int>& s) {
-        sort(g.begin(), g.end());
-        sort(s.begin(), s.end());
-        int contend_child = 0, cookie = 0;
-        while (contend_child < g.size() && cookie < s.size()) {
-            if (g[contend_child] <= s[cookie])
-                ++contend_child;
-            ++cookie;
-        }
-        return contend_child;
+    int candy(vector<int>& ratings) {
+        int n = ratings.size();
+        if (n < 2)
+            return n;
+        vector<int> res(n, 1);
+        for (int i = 1; i < n; ++i)
+            if (ratings[i-1] < ratings[i])
+                res[i] = res[i-1] + 1;
+        for (int i = n - 2; i >= 0; --i)
+            if (ratings[i] > ratings[i+1])
+                res[i] = max(res[i], res[i+1] + 1);
+        return accumulate(res.begin(), res.end(), 0);
     }
 };
 
-void test(string test_name, vector<int>& g, vector<int>& s, int expected) {
-    int res = Solution().findContentChildren(g, s);
+void test(string test_name, vector<int>& ratings, int expected) {
+    int res = Solution().candy(ratings);
     if (res == expected) {
         printf("%s succeed\n", test_name.c_str());
     } else {
@@ -29,20 +31,17 @@ void test(string test_name, vector<int>& g, vector<int>& s, int expected) {
 }
 
 int main() {
-    vector<int> g1{1,2,3};
-    vector<int> s1{1,1};
-    int expected1 = 1;
-    test("test1", g1, s1, expected1);
+    vector<int> ratings1{1,0,2};
+    int expected1 = 5;
+    test("test1", ratings1, expected1);
 
-    vector<int> g2{1,2};
-    vector<int> s2{1,2,3};
-    int expected2 = 2;
-    test("test2", g2, s2, expected2);
+    vector<int> ratings2{1,2,2};
+    int expected2 = 4;
+    test("test2", ratings2, expected2);
 
-    vector<int> g3{10, 9, 8, 7};
-    vector<int> s3{5, 6, 7, 8};
-    int expected3{2};
-    test("test3", g3, s3, expected3);
+    vector<int> ratings3{1,3,4,5,2};
+    int expected3 = 11;
+    test("test3", ratings3, expected3);
 
     return 0;
 }
