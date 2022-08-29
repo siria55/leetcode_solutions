@@ -3,6 +3,8 @@
         "*.cjson": "jsonc",
         "*.wxss": "css",
         "*.wxs": "javascript",
-        "numeric": "cpp"
+        "numeric": "cpp",
+        "vector": "cpp",
+        "cstdio": "cpp"
     }
 }

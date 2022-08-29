@@ -1,57 +1,50 @@
 #include <cstdio>
 #include <string>
 #include <vector>
-#include <algorithm>
 using namespace std;
 
 class Solution {
 public:
-    int eraseOverlapIntervals(vector<vector<int>>& intervals) {
-        sort(intervals.begin(), intervals.end(),
-            [](const vector<int> &a, const vector<int> &b) {
-                return a[1] < b[1];
-            }
-        );
-        int removed = 0, last_right = intervals[0][1];
-        int n = intervals.size();
-        for (int i = 1; i < n; ++i) {
-            if (last_right > intervals[i][0])
-                ++removed;
+    bool canPlaceFlowers(vector<int>& flowerbed, int n) {
+        int size = flowerbed.size();
+        for (int i = 0; i < size;) {
+            if (flowerbed[i])
+                i += 2;
             else
-                last_right = intervals[i][1];
+                if (i == size - 1 || flowerbed[i+1] == 0) {
+                    i += 2;
+                    --n;
+                } else
+                    i += 3;
         }
-        return removed;
+        return n <= 0;
     }
 };
 
-void test(string test_name, vector<vector<int>>& intervals, int expected)
-{
-    int res = Solution().eraseOverlapIntervals(intervals);
-    if (res == expected)
+void test(string test_name, vector<int>& flowerbed, int n, bool expected) {
+    bool res = Solution().canPlaceFlowers(flowerbed, n);
+    if (res == expected) {
         printf("%s succeed\n", test_name.c_str());
-    else
+    } else {
         printf("%s fail\n", test_name.c_str());
+    }
 }
 
-int main()
-{
-    vector<vector<int>> intervals1{
-        {1,2}, {2,3}, {3,4}, {1,3}
-    };
-    int expected1 = 1;
-    test("test1", intervals1, expected1);
+int main() {
+    vector<int> flowerbed1{1,0,0,0,1};
+    int n1 = 1;
+    bool expected1 = true;
+    test("test1", flowerbed1, n1, expected1);
 
-    vector<vector<int>> intervals2{
-        {1,2}, {1,2}, {1,2}
-    };
-    int expected2 = 2;
-    test("test2", intervals2, expected2);
+    vector<int> flowerbed2{1,0,0,0,1};
+    int n2 = 2;
+    bool expected2 = false;
+    test("test2", flowerbed2, n2, expected2);
 
-    vector<vector<int>> intervals3{
-        {1,2}, {2,3}
-    };
-    int expected3 = 0;
-    test("test3", intervals3, expected3);
+    vector<int> flowerbed3{1,0,0,0,1,0,0};
+    int n3 = 2;
+    bool expected3 = true;
+    test("test3", flowerbed3, n3, expected3);
 
     return 0;
 }
