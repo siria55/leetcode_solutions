@@ -5,40 +5,38 @@ using namespace std;
 
 class Solution {
 public:
-    int maxProfit(vector<int>& prices) {
-        int res = 0;
-        int size = prices.size();
-        for (int i = 1; i < size; ++i)
-            res += max(prices[i]-prices[i-1], 0);
-        return res;
+    vector<vector<int>> reconstructQueue(vector<vector<int>>& people) {
+
     }
 };
 
-void test(string test_name, vector<int>& prices, int expected)
-{
-    Solution s;
-    int res = Solution().maxProfit(prices);
 
-    if (res == expected) {
+void test(string test_name, vector<vector<int>>& people, vector<vector<int>>& expected)
+{
+    vector<vector<int>> res = Solution().reconstructQueue(people);
+    if (res == expected)
         printf("%s succeed\n", test_name.c_str());
-    } else {
+    else
         printf("%s fail\n", test_name.c_str());
-    }
 }
 
 int main()
 {
-    vector<int> prices1{7,1,5,3,6,4};
-    int expected1 = 7;
-    test("test1", prices1, expected1);
+    vector<vector<int>> people1{
+        {7,0}, {4,4}, {7,1}, {5,0}, {6,1}, {5,2}
+    };
+    vector<vector<int>> expected1{
+        {5,0}, {7,0}, {5,2}, {6,1}, {4,4}, {7,1}
+    };
+    test("test1", people1, expected1);
 
-    vector<int> prices2{1,2,3,4,5};
-    int expected2 = 4;
-    test("test2", prices2, expected2);
-
-    vector<int> prices3{7,6,4,3,1};
-    int expected3 = 0;
-    test("test3", prices3, expected3);
+    vector<vector<int>> people2{
+        {6,0},{5,0},{4,0},{3,2},{2,2},{1,4}
+    };
+    vector<vector<int>> expected2{
+        {4,0},{5,0},{2,2},{3,2},{1,4},{6,0}
+    };
+    test("test2", people2, expected2);
 
     return 0;
 }
