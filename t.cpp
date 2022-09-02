@@ -1,33 +1,20 @@
 #include <cstdio>
 #include <string>
 #include <vector>
-#include <array>
 using namespace std;
 
 class Solution {
 public:
-    vector<int> partitionLabels(string s) {
-        int size = s.size();
-        array<int, 26> lasts;
-        vector<int> res;
+    int maxProfit(vector<int>& prices) {
 
-        for (int i = 0; i < size; ++i)
-            lasts[s[i] - 'a'] = i;
-
-        int start = 0, end = 0;
-        for (int i = 0; i < size; ++i) {
-            end = max(end, lasts[s[i] - 'a']);
-            if (end == i) {
-                res.push_back(end + 1 - start);
-                start = end + 1;
-            }
-        }
-        return res;
     }
 };
 
-void test(string test_name, string s, vector<int>& expected) {
-    vector<int> res = Solution().partitionLabels(s);
+void test(string test_name, vector<int>& prices, int expected)
+{
+    Solution s;
+    int res = Solution().maxProfit(prices);
+
     if (res == expected) {
         printf("%s succeed\n", test_name.c_str());
     } else {
@@ -35,14 +22,19 @@ void test(string test_name, string s, vector<int>& expected) {
     }
 }
 
-int main() {
-    string s1 = "ababcbacadefegdehijhklij";
-    vector<int> expected1{9, 7, 8};
-    test("test1", s1, expected1);
+int main()
+{
+    vector<int> prices1{7,1,5,3,6,4};
+    int expected1 = 7;
+    test("test1", prices1, expected1);
 
-    string s2 = "eccbbbbdec";
-    vector<int> expected2{10};
-    test("test2", s2, expected2);
+    vector<int> prices2{1,2,3,4,5};
+    int expected2 = 4;
+    test("test2", prices2, expected2);
+
+    vector<int> prices3{7,6,4,3,1};
+    int expected3 = 0;
+    test("test3", prices3, expected3);
 
     return 0;
 }
