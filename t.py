@@ -2,14 +2,19 @@ from typing import *
 
 class Solution:
     def maxProfit(self, prices: List[int]) -> int:
-        pass
+        res = 0
+        size = len(prices)
+        for i in range(1, size):
+            res += max(prices[i]-prices[i-1], 0)
+        return res
+
 
 def test(test_name, prices, expected):
     res = Solution().maxProfit(prices)
     if res == expected:
-        print(test_name + ' success.')
+        print(test_name + ' succeed')
     else:
-        print(test_name + ' failed.')
+        print(test_name + ' fail')
 
 
 if __name__ == "__main__":
