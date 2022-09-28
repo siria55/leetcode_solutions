@@ -3,26 +3,20 @@ from typing import *
 
 class Solution:
     def reconstructQueue(self, people: List[List[int]]) -> List[List[int]]:
-        pass
-
-
-
-
-class Solution:
-    def reconstructQueue(self, people: List[List[int]]) -> List[List[int]]:
-        people.sort(key=functools.cmp_to_key(cmp_pair))
+        people.sort(key=lambda item : (item[0], -item[1]), reverse=True)
         res = []
-        for pair in people:
-            res.insert(pair[1], pair)
+        size = len(people)
+        for i in range(size):
+            res.insert(people[i][1], people[i])
         return res
 
 
 def test(test_name, people, expected):
     res = Solution().reconstructQueue(people)
     if res == expected:
-        print(test_name + ' success.')
+        print(test_name + ' succeed')
     else:
-        print(test_name + ' failed.')
+        print(test_name + ' fail')
 
 
 if __name__ == '__main__':
