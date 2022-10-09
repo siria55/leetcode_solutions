@@ -1,34 +1,27 @@
 #include <cstdio>
 #include <string>
 #include <vector>
+#include <algorithm>
 using namespace std;
 
 class Solution {
 public:
-    bool checkPossibility(vector<int>& nums) {
-        int N = nums.size();
-        if (N <= 1)
-            return true;
-        
-        bool moded = nums[0] > nums[1];    // 特殊处理 i = 0，否则在 for 中处理比较麻烦
-        for (int i = 1; i < N - 1; ++i) {
-            if (nums[i] <= nums[i+1])
-                continue;
-            if (moded)
-                return false;
-            if (nums[i-1] <= nums[i+1])
-                nums[i] = nums[i+1];
-            else
-                nums[i+1] = nums[i];
-            moded = true;
-        }
+    int findContentChildren(vector<int>& g, vector<int>& s) {
+        int s1 = g.size(), s2 = s.size();
+        int p1 = 0, p2 = 0;
 
-        return true;
+        sort(g.begin(), g.end());
+        sort(s.begin(), s.end());
+        while (p1 < s1 && p2 < s2) {
+            if (g[p1] <= s[p2++])
+                ++p1;
+        }
+        return p1;
     }
 };
 
-void test(string test_name, vector<int>& nums, bool expected) {
-    bool res = Solution().checkPossibility(nums);
+void test(string test_name, vector<int>& g, vector<int>& s, int expected) {
+    int res = Solution().findContentChildren(g, s);
     if (res == expected) {
         printf("%s succeed\n", test_name.c_str());
     } else {
@@ -36,18 +29,22 @@ void test(string test_name, vector<int>& nums, bool expected) {
     }
 }
 
+
 int main() {
-    vector<int> nums1{4,2,3};
-    bool expected1 = true;
-    test("test1", nums1, expected1);
+    vector<int> g1{1,2,3};
+    vector<int> s1{1,1};
+    int expected1 = 1;
+    test("test1", g1, s1, expected1);
 
-    vector<int> nums2{4,2,1};
-    bool expected2 = false;
-    test("test2", nums2, expected2);
+    vector<int> g2{1,2};
+    vector<int> s2{1,2,3};
+    int expected2 = 2;
+    test("test2", g2, s2, expected2);
 
-    vector<int> nums3{3,4,2,3};
-    bool expected3 = false;
-    test("test3", nums3, expected3);
+    vector<int> g3{10, 9, 8, 7};
+    vector<int> s3{5, 6, 7, 8};
+    int expected3{2};
+    test("test3", g3, s3, expected3);
 
     return 0;
 }

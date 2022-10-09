@@ -1,4 +1,5 @@
-#include <iostream>
+#include <cstdio>
+#include <string>
 #include <vector>
 #include <algorithm>
 using namespace std;
@@ -6,23 +7,25 @@ using namespace std;
 class Solution {
 public:
     int findContentChildren(vector<int>& g, vector<int>& s) {
+        int s1 = g.size(), s2 = s.size();
+        int p1 = 0, p2 = 0;
+
         sort(g.begin(), g.end());
         sort(s.begin(), s.end());
-        int size_g = g.size(), size_s = s.size();
-        int i{0}, j{0};
-        while (i < size_g && j < size_s) {
-            if (g[i] <= s[j++]) i++;
+        while (p1 < s1 && p2 < s2) {
+            if (g[p1] <= s[p2++])
+                ++p1;
         }
-        return i;
+        return p1;
     }
 };
 
 void test(string test_name, vector<int>& g, vector<int>& s, int expected) {
     int res = Solution().findContentChildren(g, s);
     if (res == expected) {
-        cout << test_name + " succeed" << endl;
+        printf("%s succeed\n", test_name.c_str());
     } else {
-        cout << test_name + " fail" << endl;
+        printf("%s fail\n", test_name.c_str());
     }
 }
 
