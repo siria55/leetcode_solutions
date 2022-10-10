@@ -1,27 +1,32 @@
 #include <cstdio>
 #include <string>
 #include <vector>
-#include <algorithm>
+#include <numeric>
 using namespace std;
 
 class Solution {
 public:
-    int findContentChildren(vector<int>& g, vector<int>& s) {
-        int s1 = g.size(), s2 = s.size();
-        int p1 = 0, p2 = 0;
+    int candy(vector<int>& ratings) {
+        int n = ratings.size();
+        if (n < 2)
+            return n;
+        vector<int> alloc(n, 1);
 
-        sort(g.begin(), g.end());
-        sort(s.begin(), s.end());
-        while (p1 < s1 && p2 < s2) {
-            if (g[p1] <= s[p2++])
-                ++p1;
-        }
-        return p1;
+        for (int i = 1; i < n; ++i)
+            if (ratings[i] > ratings[i-1])
+                alloc[i] = alloc[i-1] + 1;
+
+        for (int i = n-2; i >= 0; --i)
+            if (ratings[i] > ratings[i+1])
+                alloc[i] = max(alloc[i], alloc[i+1]+1);
+
+        return accumulate(alloc.begin(), alloc.end(), 0);
     }
 };
 
-void test(string test_name, vector<int>& g, vector<int>& s, int expected) {
-    int res = Solution().findContentChildren(g, s);
+
+void test(string test_name, vector<int>& ratings, int expected) {
+    int res = Solution().candy(ratings);
     if (res == expected) {
         printf("%s succeed\n", test_name.c_str());
     } else {
@@ -29,22 +34,18 @@ void test(string test_name, vector<int>& g, vector<int>& s, int expected) {
     }
 }
 
-
 int main() {
-    vector<int> g1{1,2,3};
-    vector<int> s1{1,1};
-    int expected1 = 1;
-    test("test1", g1, s1, expected1);
+    vector<int> ratings1{1,0,2};
+    int expected1 = 5;
+    test("test1", ratings1, expected1);
 
-    vector<int> g2{1,2};
-    vector<int> s2{1,2,3};
-    int expected2 = 2;
-    test("test2", g2, s2, expected2);
+    vector<int> ratings2{1,2,2};
+    int expected2 = 4;
+    test("test2", ratings2, expected2);
 
-    vector<int> g3{10, 9, 8, 7};
-    vector<int> s3{5, 6, 7, 8};
-    int expected3{2};
-    test("test3", g3, s3, expected3);
+    vector<int> ratings3{1,3,4,5,2};
+    int expected3 = 11;
+    test("test3", ratings3, expected3);
 
     return 0;
 }

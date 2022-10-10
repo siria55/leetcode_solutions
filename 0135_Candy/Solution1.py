@@ -1,18 +1,22 @@
 from typing import *
 
+
 class Solution:
     def candy(self, ratings: List[int]) -> int:
         n = len(ratings)
         if n < 2:
             return n
-        res = [1] * n
+        alloc = [1] * n
+
         for i in range(1, n):
-            if ratings[i-1] < ratings[i]:
-                res[i] = res[i-1] + 1
+            if ratings[i] > ratings[i-1]:
+                alloc[i] = alloc[i-1] + 1
+
         for i in range(n-2, -1, -1):
             if ratings[i] > ratings[i+1]:
-                res[i] = max(res[i], res[i+1]+1)
-        return sum(res)
+                alloc[i] = max(alloc[i], alloc[i+1]+1)
+
+        return sum(alloc)
 
 
 def test(test_name, ratings, expected):
@@ -35,3 +39,7 @@ if __name__ == '__main__':
     ratings3 = [1,3,4,5,2]
     expected3 = 11
     test('test3', ratings3, expected3)
+
+    ratings4 = [1,2]
+    expected4 = 3
+    test('test4', ratings4, expected4)

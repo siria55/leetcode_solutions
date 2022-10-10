@@ -1,6 +1,6 @@
 #include <cstdio>
-#include <vector>
 #include <string>
+#include <vector>
 #include <numeric>
 using namespace std;
 
@@ -10,16 +10,20 @@ public:
         int n = ratings.size();
         if (n < 2)
             return n;
-        vector<int> res(n, 1);
+        vector<int> alloc(n, 1);
+
         for (int i = 1; i < n; ++i)
-            if (ratings[i-1] < ratings[i])
-                res[i] = res[i-1] + 1;
-        for (int i = n - 2; i >= 0; --i)
+            if (ratings[i] > ratings[i-1])
+                alloc[i] = alloc[i-1] + 1;
+
+        for (int i = n-2; i >= 0; --i)
             if (ratings[i] > ratings[i+1])
-                res[i] = max(res[i], res[i+1] + 1);
-        return accumulate(res.begin(), res.end(), 0);
+                alloc[i] = max(alloc[i], alloc[i+1]+1);
+
+        return accumulate(alloc.begin(), alloc.end(), 0);
     }
 };
+
 
 void test(string test_name, vector<int>& ratings, int expected) {
     int res = Solution().candy(ratings);

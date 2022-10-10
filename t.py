@@ -2,20 +2,25 @@ from typing import *
 
 
 class Solution:
-    def findContentChildren(self, g: List[int], s: List[int]) -> int:
-        s1, s2 = len(g), len(s)
-        p1, p2 = 0, 0
-        g.sort()
-        s.sort()
-        while p1 < s1 and p2 < s2:
-            if g[p1] <= s[p2]:
-                p1 += 1
-            p2 += 1
-        return p1
+    def candy(self, ratings: List[int]) -> int:
+        n = len(ratings)
+        if n < 2:
+            return n
+        alloc = [1] * n
+
+        for i in range(1, n):
+            if ratings[i] > ratings[i-1]:
+                alloc[i] = alloc[i-1] + 1
+
+        for i in range(n-2, -1, -1):
+            if ratings[i] > ratings[i+1]:
+                alloc[i] = max(alloc[i], alloc[i+1]+1)
+
+        return sum(alloc)
 
 
-def test(test_name, g, s, expected):
-    res = Solution().findContentChildren(g, s)
+def test(test_name, ratings, expected):
+    res = Solution().candy(ratings)
     if res == expected:
         print(test_name + ' succeed')
     else:
@@ -23,17 +28,18 @@ def test(test_name, g, s, expected):
 
 
 if __name__ == '__main__':
-    g1 = [1,2,3]
-    s1 = [1,1]
-    expected1 = 1
-    test('test1', g1, s1, expected1)
+    ratings1 = [1,0,2]
+    expected1 = 5
+    test('test1', ratings1, expected1)
 
-    g2 = [1,2]
-    s2 = [1,2,3]
-    expected2 = 2
-    test('test2', g2, s2, expected2)
-    
-    g3 = [10, 9, 8, 7]
-    s3 = [5,6,7,8]
-    expected3 = 2
-    test('test3', g3, s3, expected3)
+    ratings2 = [1,2,2]
+    expected2 = 4
+    test('test2', ratings2, expected2)
+
+    ratings3 = [1,3,4,5,2]
+    expected3 = 11
+    test('test3', ratings3, expected3)
+
+    ratings4 = [1,2]
+    expected4 = 3
+    test('test4', ratings4, expected4)
