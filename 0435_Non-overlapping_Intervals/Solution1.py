@@ -3,9 +3,10 @@ from typing import *
 
 class Solution:
     def eraseOverlapIntervals(self, intervals: List[List[int]]) -> int:
-        intervals.sort(key=lambda item:item[1])
+        intervals.sort(key=lambda item: item[1])
+        size = len(intervals)
         removed, last_right = 0, intervals[0][1]
-        for i in range(1, len(intervals)):
+        for i in range(1, size):
             if last_right > intervals[i][0]:
                 removed += 1
             else:
@@ -21,7 +22,7 @@ def test(test_name, intervals, expected):
         print(test_name + ' fail')
 
 
-if __name__ == "__main__":
+if __name__ == '__main__':
     intervals1 = [[1,2], [2,3], [3,4], [1,3]]
     expected1 = 1
     test('test1', intervals1, expected1)

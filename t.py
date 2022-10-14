@@ -2,25 +2,20 @@ from typing import *
 
 
 class Solution:
-    def candy(self, ratings: List[int]) -> int:
-        n = len(ratings)
-        if n < 2:
-            return n
-        alloc = [1] * n
-
-        for i in range(1, n):
-            if ratings[i] > ratings[i-1]:
-                alloc[i] = alloc[i-1] + 1
-
-        for i in range(n-2, -1, -1):
-            if ratings[i] > ratings[i+1]:
-                alloc[i] = max(alloc[i], alloc[i+1]+1)
-
-        return sum(alloc)
+    def eraseOverlapIntervals(self, intervals: List[List[int]]) -> int:
+        intervals.sort(key=lambda item: item[1])
+        size = len(intervals)
+        removed, last_right = 0, intervals[0][1]
+        for i in range(1, size):
+            if last_right > intervals[i][0]:
+                removed += 1
+            else:
+                last_right = intervals[i][1]
+        return removed
 
 
-def test(test_name, ratings, expected):
-    res = Solution().candy(ratings)
+def test(test_name, intervals, expected):
+    res = Solution().eraseOverlapIntervals(intervals)
     if res == expected:
         print(test_name + ' succeed')
     else:
@@ -28,18 +23,18 @@ def test(test_name, ratings, expected):
 
 
 if __name__ == '__main__':
-    ratings1 = [1,0,2]
-    expected1 = 5
-    test('test1', ratings1, expected1)
+    intervals1 = [[1,2], [2,3], [3,4], [1,3]]
+    expected1 = 1
+    test('test1', intervals1, expected1)
 
-    ratings2 = [1,2,2]
-    expected2 = 4
-    test('test2', ratings2, expected2)
+    intervals2 = [[1,2], [1,2], [1,2]]
+    expected2 = 2
+    test('test2', intervals2, expected2)
 
-    ratings3 = [1,3,4,5,2]
-    expected3 = 11
-    test('test3', ratings3, expected3)
+    intervals3 = [[1,2], [2,3]]
+    expected3 = 0
+    test('test3', intervals3, expected3)
 
-    ratings4 = [1,2]
-    expected4 = 3
-    test('test4', ratings4, expected4)
+    intervals4 = [[1,100],[11,22],[1,11],[2,12]]
+    expected4 = 2
+    test('test4', intervals4, expected4)
