@@ -8,16 +8,19 @@ public:
     bool canPlaceFlowers(vector<int>& flowerbed, int n) {
         int size = flowerbed.size();
         for (int i = 0; i < size;) {
-            if (flowerbed[i])
+            if (flowerbed[i]) {
                 i += 2;
-            else
+            } else {
                 if (i == size - 1 || flowerbed[i+1] == 0) {
-                    i += 2;
                     --n;
-                } else
+                    i += 2;
+                } else {
                     i += 3;
+                }
+            }
         }
         return n <= 0;
+
     }
 };
 
