@@ -1,5 +1,6 @@
 from typing import *
 
+
 class Solution:
     def canPlaceFlowers(self, flowerbed: List[int], n: int) -> bool:
         size = len(flowerbed)
@@ -9,8 +10,8 @@ class Solution:
                 i += 2
             else:
                 if i == size - 1 or flowerbed[i+1] == 0:
-                    i += 2
                     n -= 1
+                    i += 2
                 else:
                     i += 3
         return n <= 0

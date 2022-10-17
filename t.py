@@ -2,20 +2,23 @@ from typing import *
 
 
 class Solution:
-    def eraseOverlapIntervals(self, intervals: List[List[int]]) -> int:
-        intervals.sort(key=lambda item: item[1])
-        size = len(intervals)
-        removed, last_right = 0, intervals[0][1]
-        for i in range(1, size):
-            if last_right > intervals[i][0]:
-                removed += 1
+    def canPlaceFlowers(self, flowerbed: List[int], n: int) -> bool:
+        size = len(flowerbed)
+        i = 0
+        while i < size:
+            if flowerbed[i]:
+                i += 2
             else:
-                last_right = intervals[i][1]
-        return removed
+                if i == size - 1 or flowerbed[i+1] == 0:
+                    n -= 1
+                    i += 2
+                else:
+                    i += 3
+        return n <= 0
 
 
-def test(test_name, intervals, expected):
-    res = Solution().eraseOverlapIntervals(intervals)
+def test(test_name, flowerbed, n, expected):
+    res = Solution().canPlaceFlowers(flowerbed, n)
     if res == expected:
         print(test_name + ' succeed')
     else:
@@ -23,18 +26,17 @@ def test(test_name, intervals, expected):
 
 
 if __name__ == '__main__':
-    intervals1 = [[1,2], [2,3], [3,4], [1,3]]
-    expected1 = 1
-    test('test1', intervals1, expected1)
+    flowerbed1 = [1,0,0,0,1]
+    n1 = 1
+    expected1 = True
+    test('test1', flowerbed1, n1, expected1)
 
-    intervals2 = [[1,2], [1,2], [1,2]]
-    expected2 = 2
-    test('test2', intervals2, expected2)
+    flowerbed2 = [1,0,0,0,1]
+    n2 = 2
+    expected2 = False
+    test('test2', flowerbed2, n2, expected2)
 
-    intervals3 = [[1,2], [2,3]]
-    expected3 = 0
-    test('test3', intervals3, expected3)
-
-    intervals4 = [[1,100],[11,22],[1,11],[2,12]]
-    expected4 = 2
-    test('test4', intervals4, expected4)
+    flowerbed3 = [1,0,0,0,1,0,0]
+    n3 = 2
+    expected3 = True
+    test('test3', flowerbed3, n3, expected3)
