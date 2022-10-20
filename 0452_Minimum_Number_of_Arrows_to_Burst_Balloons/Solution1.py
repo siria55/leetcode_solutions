@@ -1,11 +1,11 @@
-from typing import List
+from typing import *
 
 
 class Solution:
     def findMinArrowShots(self, points: List[List[int]]) -> int:
         points.sort(key=lambda x:x[1])
-        size = len(points)
         res = 1
+        size = len(points)
         tail = points[0][1]
         for i in range(1, size):
             if tail < points[i][0]:
@@ -22,7 +22,7 @@ def test(test_name, points, expected):
         print(test_name + ' fail')
 
 
-if __name__ == "__main__":
+if __name__ == '__main__':
     points1 = [[10,16],[2,8],[1,6],[7,12]]
     expected1 = 2
     test('test1', points1, expected1)
