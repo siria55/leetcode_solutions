@@ -1,6 +1,25 @@
+#include <cstdio>
+#include <string>
+#include <vector>
+#include <algorithm>
+using namespace std;
+
 class Solution {
 public:
     int findMinArrowShots(vector<vector<int>>& points) {
+        sort(points.begin(), points.end(), [](vector<int> &a, vector<int> &b){
+            return a[1] < b[1];
+        });
+        int res = 1;
+        int tail = points[0][1];
+        int size = points.size();
+        for (int i = 1; i < size; ++i) {
+            if (tail < points[i][0]) {
+                ++res;
+                tail = points[i][1];
+            }
+        }
+        return res;
 
     }
 };
