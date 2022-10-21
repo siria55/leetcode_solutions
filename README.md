@@ -1,12 +1,2 @@
-除SQL外基本每道题都有自己的单元测试哦
-
-不断补充中...
-
-mst开头的是剑指offer
-msjd才是面试题
-
-洛谷的题解在目录 `/lg` 下
-
-## Stargazers over time
-
-[![Stargazers over time](https://starchart.cc/LeoSirius/leetcode_solutions.svg)](https://starchart.cc/LeoSirius/leetcode_solutions)
+this is a repo for code
+you can see the problem solving ideas at: https://ionized-damselfly-2f0.notion.site/Leetcode-Solution-62b8bfcfadbe43f9a5b94e3f83979880
