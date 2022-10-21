@@ -16,13 +16,13 @@ public:
         }
         int start = 0, end = 0;
         for (int i = 0; i < size; ++i) {
-            end = max(end, lasts[i-'a']);
+            end = max(end, lasts[s[i]-'a']);
             if (end == i) {
                 res.push_back(end + 1 - start);
                 start = i + 1;
             }
         }
-        return end;
+        return res;
     }
 };
 

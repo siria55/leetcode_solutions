@@ -2,17 +2,17 @@ from typing import *
 
 class Solution:
     def partitionLabels(self, s: str) -> List[int]:
-        size = len(s)
         lasts = [0] * 26
-        for i in range(size):
-            lasts[ord(s[i])-ord('a')] = i
-
         res = []
+
+        for i, ch in enumerate(s):
+            lasts[ord(ch)-ord('a')] = i
+
         start, end = 0, 0
-        for i in range(size):
-            end = max(end, lasts[ord(s[i]) - ord('a')])
+        for i, ch in enumerate(s):
+            end = max(end, lasts[ord(s[i])-ord('a')])
             if end == i:
-                res.append(end+1-start)
+                res.append(end + 1 - start)
                 start = end + 1
         return res
 
