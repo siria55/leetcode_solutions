@@ -8,17 +8,16 @@ public:
     int maxProfit(vector<int>& prices) {
         int res = 0;
         int size = prices.size();
-        for (int i = 1; i < size; ++i)
-            res += max(prices[i]-prices[i-1], 0);
+        for (int i = 1; i < size; ++i) {
+            res += max(prices[i] - prices[i-1], 0);
+        }
         return res;
     }
 };
 
 void test(string test_name, vector<int>& prices, int expected)
 {
-    Solution s;
     int res = Solution().maxProfit(prices);
-
     if (res == expected) {
         printf("%s succeed\n", test_name.c_str());
     } else {
