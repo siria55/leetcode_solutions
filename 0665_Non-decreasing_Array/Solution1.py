@@ -8,7 +8,7 @@ class Solution:
             return True
 
         moded = nums[0] > nums[1]
-        for i in range(1, size-1):
+        for i in range(1, size - 1):
             if nums[i] <= nums[i+1]:
                 continue
             if moded:
