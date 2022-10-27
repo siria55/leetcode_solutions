@@ -3,26 +3,26 @@
 #include <vector>
 using namespace std;
 
+
 class Solution {
 public:
     bool checkPossibility(vector<int>& nums) {
-        int N = nums.size();
-        if (N <= 1)
+        int size = nums.size();
+        if (size <= 1)
             return true;
-        
-        bool moded = nums[0] > nums[1];    // 特殊处理 i = 0，否则在 for 中处理比较麻烦
-        for (int i = 1; i < N - 1; ++i) {
+
+        int moded = nums[0] > nums[1];
+        for (int i = 1; i < size - 1; ++i) {
             if (nums[i] <= nums[i+1])
                 continue;
             if (moded)
                 return false;
             if (nums[i-1] <= nums[i+1])
-                nums[i] = nums[i+1];        // 放大
+                nums[i] = nums[i+1];      // 缩小
             else
-                nums[i+1] = nums[i];        // 缩小
+                nums[i+1] = nums[i];      // 放大
             moded = true;
         }
-
         return true;
     }
 };
