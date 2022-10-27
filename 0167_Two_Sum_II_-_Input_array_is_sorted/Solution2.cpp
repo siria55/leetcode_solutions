@@ -1,31 +1,35 @@
-#include <iostream>
+#include <cstdio>
+#include <string>
 #include <vector>
 using namespace std;
 
 class Solution {
 public:
     vector<int> twoSum(vector<int>& numbers, int target) {
-        int l = 0, r = numbers.size() - 1, sum;
+        int l = 0, r = numbers.size() - 1;
         while (l < r) {
-            sum = numbers[l] + numbers[r];
-            if (sum < target) l++;
-            else if (sum > target) r--;
-            else return {l+1, r+1};
+            int sum = numbers[l] + numbers[r];
+            if (sum < target)
+                ++l;
+            else if (sum > target)
+                --r;
+            else
+                return {l+1, r+1};
         }
         return {-1, -1};
     }
 };
 
-void test(const string& test_name,
+
+void test(string test_name,
           vector<int>& numbers,
           int target,
           const vector<int>& expected) {
     vector<int> res = Solution().twoSum(numbers, target);
-    if (res == expected) {
-        cout << test_name + " succeed" << endl;
-    } else {
-        cout << test_name + " fail" << endl;
-    }
+    if (res == expected)
+        printf("%s succeed\n", test_name.c_str());
+    else
+        printf("%s fail\n", test_name.c_str());
 }
 
 int main() {

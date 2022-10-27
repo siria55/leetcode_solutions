@@ -3,51 +3,50 @@
 #include <vector>
 using namespace std;
 
-
 class Solution {
 public:
-    bool checkPossibility(vector<int>& nums) {
-        int size = nums.size();
-        if (size <= 1)
-            return true;
-
-        int moded = nums[0] > nums[1];
-        for (int i = 1; i < size - 1; ++i) {
-            if (nums[i] <= nums[i+1])
-                continue;
-            if (moded)
-                return false;
-            if (nums[i-1] <= nums[i+1])
-                nums[i] = nums[i+1];      // 缩小
+    vector<int> twoSum(vector<int>& numbers, int target) {
+        int l = 0, r = numbers.size() - 1;
+        while (l < r) {
+            int sum = numbers[l] + numbers[r];
+            if (sum < target)
+                ++l;
+            else if (sum > target)
+                --r;
             else
-                nums[i+1] = nums[i];      // 放大
-            moded = true;
+                return {l+1, r+1};
         }
-        return true;
+        return {-1, -1};
     }
 };
 
-void test(string test_name, vector<int>& nums, bool expected) {
-    bool res = Solution().checkPossibility(nums);
-    if (res == expected) {
+
+void test(string test_name,
+          vector<int>& numbers,
+          int target,
+          const vector<int>& expected) {
+    vector<int> res = Solution().twoSum(numbers, target);
+    if (res == expected)
         printf("%s succeed\n", test_name.c_str());
-    } else {
+    else
         printf("%s fail\n", test_name.c_str());
-    }
 }
 
 int main() {
-    vector<int> nums1{4,2,3};
-    bool expected1 = true;
-    test("test1", nums1, expected1);
+    vector<int> numbers1{2,7,11,15};
+    int target1 = 9;
+    vector<int> expected1{1,2};
+    test("test1", numbers1, target1, expected1);
 
-    vector<int> nums2{4,2,1};
-    bool expected2 = false;
-    test("test2", nums2, expected2);
+    vector<int> numbers2{2,3,4};
+    int target2 = 6;
+    vector<int> expected2{1,3};
+    test("test2", numbers2, target2, expected2);
 
-    vector<int> nums3{3,4,2,3};
-    bool expected3 = false;
-    test("test3", nums3, expected3);
+    vector<int> numbers3{-1, 0};
+    int target3 = -1;
+    vector<int> expected3{1,2};
+    test("test3", numbers3, target3, expected3);
 
     return 0;
 }
