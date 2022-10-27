@@ -1,30 +1,42 @@
-import { ArrayUtils } from './util_js/array.js';
-
 /**
- * @param {number[][]} people
- * @return {number[][]}
+ * @param {number[]} nums
+ * @return {boolean}
  */
-var reconstructQueue = function(people) {
-  let _comp = function(a, b) {
-    if (a[0] === b[0])
-      return a[1] - b[1];
-    return b[0] - a[0];
+var checkPossibility = function(nums) {
+  let size = nums.length;
+  if (size <= 1)
+    return true;
+  let moded = nums[0] > nums[1];
+  for (let i = 1; i < size - 1; ++i) {
+    if (nums[i] <= nums[i+1])
+      continue;
+    if (moded)
+      return false;
+    if (nums[i-1] <= nums[i+1])
+      nums[i] = nums[i+1];
+    else
+      nums[i+1] = nums[i];
+    moded = true;
   }
-  people.sort(_comp);
-  let res = [];
-  for (const pair of people)
-    res.splice(pair[1], 0, pair);
-  return res;
+  return true;
 };
 
-function test(test_name, people, expected) {
-  let res = reconstructQueue(people);
-  if (ArrayUtils.isEqualArray(res, expected))
+function test(test_name, nums, expected) {
+  let res = checkPossibility(nums);
+  if (res === expected)
     console.log(test_name + ' succeed');
   else
     console.log(test_name + ' fail');
 }
 
-people1 = [[7,0], [4,4], [7,1], [5,0], [6,1], [5,2]]
-expected1 = [[5,0], [7,0], [5,2], [6,1], [4,4], [7,1]]
-test('test1', people1, expected1)
+let nums1 = [4,2,3];
+let expected1 = true;
+test('test1', nums1, expected1);
+
+let nums2 = [4,2,1];
+let expected2 = false;
+test('test2', nums2, expected2);
+
+let nums3 = [3,4,2,3];
+let expected3 = false;
+test('test3', nums3, expected3);
