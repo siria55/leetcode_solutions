@@ -5,48 +5,34 @@ using namespace std;
 
 class Solution {
 public:
-    vector<int> twoSum(vector<int>& numbers, int target) {
-        int l = 0, r = numbers.size() - 1;
-        while (l < r) {
-            int sum = numbers[l] + numbers[r];
-            if (sum < target)
-                ++l;
-            else if (sum > target)
-                --r;
-            else
-                return {l+1, r+1};
-        }
-        return {-1, -1};
+    void merge(vector<int>& nums1, int m, vector<int>& nums2, int n) {
+        int p1 = m - 1, p2 = n - 1, k = m + n - 1;
+        while (p1 >= 0 && p2 >= 0)
+            nums1[k--] = nums1[p1] > nums2[p2] ? nums1[p1--] : nums2[p2--];
+        while (p2 >= 0)
+            nums1[k--] = nums2[p2--];
     }
 };
 
-
 void test(string test_name,
-          vector<int>& numbers,
-          int target,
-          const vector<int>& expected) {
-    vector<int> res = Solution().twoSum(numbers, target);
-    if (res == expected)
+        vector<int>& nums1,
+        int m,
+        vector<int>& nums2,
+        int n,
+        const vector<int>& expected) {
+    Solution().merge(nums1, m, nums2, n);
+    if (nums1 == expected) {
         printf("%s succeed\n", test_name.c_str());
-    else
+    } else {
         printf("%s fail\n", test_name.c_str());
+    }
 }
 
 int main() {
-    vector<int> numbers1{2,7,11,15};
-    int target1 = 9;
-    vector<int> expected1{1,2};
-    test("test1", numbers1, target1, expected1);
-
-    vector<int> numbers2{2,3,4};
-    int target2 = 6;
-    vector<int> expected2{1,3};
-    test("test2", numbers2, target2, expected2);
-
-    vector<int> numbers3{-1, 0};
-    int target3 = -1;
-    vector<int> expected3{1,2};
-    test("test3", numbers3, target3, expected3);
+    vector<int> nums11{1,2,3,0,0,0}, nums12{2,5,6};
+    int m1 = 3, n1 = 3;
+    vector<int> expected1{1,2,2,3,5,6};
+    test("test1", nums11, m1, nums12, n1, expected1);
 
     return 0;
 }
