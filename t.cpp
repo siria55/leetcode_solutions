@@ -1,38 +1,59 @@
 #include <cstdio>
 #include <string>
-#include <vector>
-using namespace std;
+#include "util_cpp/list.h"
 
+/**
+ * Definition for singly-linked list.
+ * struct ListNode {
+ *     int val;
+ *     ListNode *next;
+ *     ListNode(int x) : val(x), next(NULL) {}
+ * };
+ */
 class Solution {
 public:
-    void merge(vector<int>& nums1, int m, vector<int>& nums2, int n) {
-        int p1 = m - 1, p2 = n - 1, k = m + n - 1;
-        while (p1 >= 0 && p2 >= 0)
-            nums1[k--] = nums1[p1] > nums2[p2] ? nums1[p1--] : nums2[p2--];
-        while (p2 >= 0)
-            nums1[k--] = nums2[p2--];
+    ListNode *detectCycle(ListNode *head) {
+        ListNode *fast(head), *slow(head);
+        do {
+            if (!fast || !fast->next)
+                return nullptr;
+            fast = fast->next->next;
+            slow = slow->next;
+        } while (slow != fast);
+        fast = head;
+        while (fast != slow) {
+            fast = fast->next;
+            slow = slow->next;
+        }
+        return slow;
     }
 };
 
 void test(string test_name,
-        vector<int>& nums1,
-        int m,
-        vector<int>& nums2,
-        int n,
-        const vector<int>& expected) {
-    Solution().merge(nums1, m, nums2, n);
-    if (nums1 == expected) {
+          ListNode* head,
+          ListNode* expected) {
+    ListNode *res = Solution().detectCycle(head);
+    if (res == expected)
         printf("%s succeed\n", test_name.c_str());
-    } else {
+    else
         printf("%s fail\n", test_name.c_str());
-    }
 }
 
 int main() {
-    vector<int> nums11{1,2,3,0,0,0}, nums12{2,5,6};
-    int m1 = 3, n1 = 3;
-    vector<int> expected1{1,2,2,3,5,6};
-    test("test1", nums11, m1, nums12, n1, expected1);
+    // [3,2,0,-4], pos = 1
+    ListNode *head1 = build_from_vector({3,2,0,-4});
+    head1->next->next->next->next = head1->next;
+    ListNode *expected1 = head1->next;
+    test("test1", head1, expected1);
+
+    ListNode *head2 = build_from_vector({1, 2});
+    head2->next->next = head2;
+    ListNode *expected2 = head2;
+    test("test2", head2, expected2);
+
+    ListNode *head3 = build_from_vector({1});
+    ListNode *expected3 = nullptr;
+    test("test3", head3, expected3);
 
     return 0;
 }
