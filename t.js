@@ -1,31 +1,51 @@
-import { ArrayUtils } from './util_js/array.js';
+import { ListUtils } from './util_js/list.js';
 
 /**
- * @param {number[]} nums1
- * @param {number} m
- * @param {number[]} nums2
- * @param {number} n
- * @return {void} Do not return anything, modify nums1 in-place instead.
+ * Definition for singly-linked list.
+ * function ListNode(val) {
+ *     this.val = val;
+ *     this.next = null;
+ * }
  */
-var merge = function(nums1, m, nums2, n) {
-    let p1 = m - 1, p2 = n - 1, k = m + n - 1;
-    while (p1 >= 0 && p2 >= 0)
-      nums1[k--] = nums1[p1] > nums2[p2] ? nums1[p1--] : nums2[p2--];
-    while (p2 >= 0)
-      nums1[k--] = nums2[p2--];
+
+/**
+ * @param {ListNode} head
+ * @return {ListNode}
+ */
+var detectCycle = function(head) {
+    let fast = head, slow = head;
+    do {
+      if (!(fast && fast.next))
+        return null;
+      fast = fast.next.next;
+      slow = slow.next;
+    } while (fast != slow);
+    fast = head;
+    while (fast != slow) {
+      fast = fast.next;
+      slow = slow.next;
+    }
+    return slow;
 };
 
-function test(test_name, nums1, m, nums2, n, expected) {
-  merge(nums1, m, nums2, n);
-  if (ArrayUtils.isEqualArray(nums1, expected))
+function test(test_name, head, expected) {
+  let res = detectCycle(head);
+  if (res === expected)
     console.log(test_name + ' succeed');
   else
     console.log(test_name + ' fail');
 }
 
-let nums11 = [1,2,3,0,0,0];
-let m1 = 3;
-let nums21 = [2,5,6];
-let n1 = 3;
-let expected1 = [1,2,2,3,5,6];
-test('test1', nums11, m1, nums21, n1, expected1);
+let head1 = ListUtils.buildList([3,2,0,-4]);
+head1.next.next.next.next = head1.next;
+let expected1 = head1.next;
+test('test1', head1, expected1);
+
+let head2 = ListUtils.buildList([1,2]);
+head2.next.next = head2;
+let expected2 = head2;
+test('test2', head2, expected2);
+
+let head3 = ListUtils.buildList([1]);
+let expected3 = null;
+test('test3', head3, expected3);
