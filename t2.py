@@ -5,6 +5,7 @@ class Trie:
     def __init__(self):
         self.bits = [None] * 2
 
+
 class Solution:
     def findMaximumXOR(self, nums: List[int]) -> int:
         root = Trie()
@@ -19,9 +20,6 @@ class Solution:
                 node = node.bits[bit]
         
         def check(n):
-            
-
-
 
 
 def test(test_name, nums, expected):
