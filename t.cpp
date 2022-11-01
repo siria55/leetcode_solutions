@@ -1,59 +1,64 @@
 #include <cstdio>
 #include <string>
-#include "util_cpp/list.h"
+#include <array>
+using namespace std;
 
-/**
- * Definition for singly-linked list.
- * struct ListNode {
- *     int val;
- *     ListNode *next;
- *     ListNode(int x) : val(x), next(NULL) {}
- * };
- */
 class Solution {
 public:
-    ListNode *detectCycle(ListNode *head) {
-        ListNode *fast(head), *slow(head);
-        do {
-            if (!fast || !fast->next)
-                return nullptr;
-            fast = fast->next->next;
-            slow = slow->next;
-        } while (slow != fast);
-        fast = head;
-        while (fast != slow) {
-            fast = fast->next;
-            slow = slow->next;
+    string minWindow(string s, string t) {
+        array<int, 128> counter{0};
+        array<bool, 128> flag{false};
+        for (const auto& ch : t) {
+            counter[ch]++;
+            flag[ch] = true;
         }
-        return slow;
+
+        int len_s = s.size(), len_t = t.size();
+        int l = 0, start = 0, min_size = len_s + 1, cnt = 0;
+        for (int r = 0; r < len_s; ++r) {
+            if (!flag[s[r]])
+                continue;
+            if (--counter[s[r]]>=0)
+                cnt++;
+            while (cnt == len_t) {
+                if (min_size > r + 1 - l) {
+                    min_size = r + 1 - l;
+                    start = l;
+                }
+                if (flag[s[l]] && ++counter[s[l]] > 0)
+                    --cnt;
+                ++l;
+            }
+        }
+        return min_size == len_s + 1 ? "" : s.substr(start, min_size);
     }
 };
 
-void test(string test_name,
-          ListNode* head,
-          ListNode* expected) {
-    ListNode *res = Solution().detectCycle(head);
+void test(string test_name, string s, string t, string expected)
+{
+    string res = Solution().minWindow(s, t);
     if (res == expected)
         printf("%s succeed\n", test_name.c_str());
     else
         printf("%s fail\n", test_name.c_str());
 }
 
-int main() {
-    // [3,2,0,-4], pos = 1
-    ListNode *head1 = build_from_vector({3,2,0,-4});
-    head1->next->next->next->next = head1->next;
-    ListNode *expected1 = head1->next;
-    test("test1", head1, expected1);
+int main()
+{
+    string s1("ADOBECODEBANC");
+    string t1("ABC");
+    string expected1("BANC");
+    test("test1", s1, t1, expected1);
 
-    ListNode *head2 = build_from_vector({1, 2});
-    head2->next->next = head2;
-    ListNode *expected2 = head2;
-    test("test2", head2, expected2);
+    string s2("a");
+    string t2("a");
+    string expected2("a");
+    test("test2", s2, t2, expected2);
 
-    ListNode *head3 = build_from_vector({1});
-    ListNode *expected3 = nullptr;
-    test("test3", head3, expected3);
+    string s3("a");
+    string t3("aa");
+    string expected3("");
+    test("test3", s3, t3, expected3);
 
     return 0;
 }

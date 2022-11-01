@@ -39,15 +39,13 @@ public:
     }
 };
 
-
 void test(string test_name, string s, string t, string expected)
 {
     string res = Solution().minWindow(s, t);
-    if (res == expected) {
-        cout << test_name << " succeed" << endl;
-    } else {
-        cout << test_name << " fail" << endl;
-    }
+    if (res == expected)
+        printf("%s succeed\n", test_name.c_str());
+    else
+        printf("%s fail\n", test_name.c_str());
 }
 
 int main()
