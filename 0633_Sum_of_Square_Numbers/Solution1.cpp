@@ -1,30 +1,28 @@
-#include <iostream>
+#include <cstdio>
+#include <string>
 #include <cmath>
 using namespace std;
-
 
 class Solution {
 public:
     bool judgeSquareSum(int c) {
-        long l = 0, r = sqrt(c), sum;
+        long l = 0, r = sqrt(c);
         while (l <= r) {
-            sum = l * l + r * r;
-            if (sum < c) l++;
-            else if (sum > c) r--;
+            long s = l * l + r * r;
+            if (s < c) ++l;
+            else if (s > c) --r;
             else return true;
         }
         return false;
     }
 };
 
-
 void test(string test_name, int c, bool expected) {
     bool res = Solution().judgeSquareSum(c);
-    if (res == expected) {
-        cout << test_name + " succeed" << endl;
-    } else {
-        cout << test_name + " fail" << endl;
-    }
+    if (res == expected)
+        printf("%s succeed\n", test_name.c_str());
+    else
+        printf("%s fail\n", test_name.c_str());
 }
 
 int main() {
