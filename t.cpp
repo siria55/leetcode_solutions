@@ -1,47 +1,20 @@
-#include <cstdio>
-#include <string>
-using namespace std;
-
 class Solution {
-    bool isPal(const string &s, int l, int r) {
-        while (l < r)
-            if (s[l++] != s[r--])
-                return false;
-        return true;
+    bool isSubsequence(string word, string s) {
+        int pw = 0, size = s.size();
+        for (int ps = 0; ps < size; ++ps)
+            if (word[pw] == s[ps]) ++pw;
+        return pw == word.size();
     }
 public:
-    bool validPalindrome(string s) {
-        int l = 0, r = s.size() - 1;
-        while (l < r) {
-            if (s[l] != s[r])
-                return isPal(s, l+1, r) || isPal(s, l, r-1);
-            ++l;
-            --r;
+    string findLongestWord(string s, vector<string>& dictionary) {
+        string res = "";
+        for (const string& word : dictionary) {
+            if (!isSubsequence(word, s))
+                continue;
+            if (res.size() < word.size() ||
+                    res.size() == word.size() && word < res)
+                res = word;
         }
-        return true;
+        return res;
     }
 };
-
-void test(string test_name, string s, bool expected) {
-    bool res = Solution().validPalindrome(s);
-    if (res == expected)
-        printf("%s succeed\n", test_name.c_str());
-    else
-        printf("%s fail\n", test_name.c_str());
-}
-
-int main() {
-    string s1 = "aba";
-    bool expected1 = true;
-    test("test1", s1, expected1);
-
-    string s2 = "abca";
-    bool expected2 = true;
-    test("test2", s2, expected2);
-
-    string s3 = "abc";
-    bool expected3 = false;
-    test("test3", s3, expected3);
-
-    return 0;
-}
