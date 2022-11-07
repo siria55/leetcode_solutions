@@ -1,22 +1,15 @@
 /**
- * @param {string} s
- * @param {string[]} dictionary
- * @return {string}
+ * @param {number[]} numbers
+ * @param {number} target
+ * @return {number[]}
  */
-var findLongestWord = function(s, dictionary) {
-  function isSubsequence(word, s) {
-    let pw = 0;
-    for (let ps = 0; ps < s.length; ++ps)
-      if (word[pw] === s[ps]) ++pw;
-    return pw === word.length;
+var twoSum = function(numbers, target) {
+  let l = 0, r = numbers.length-1;
+  while (l < r) {
+    let s = numbers[l] + numbers[r];
+    if (s < target) ++l;
+    else if (s > target) --r;
+    else return [l+1, r+1];
   }
-
-  let res = '';
-  for (let word of dictionary) {
-    if (!isSubsequence(word, s))
-      continue;
-    if (res.length < word.length || (res.length === word.length && word < res))
-      res = word;
-  }
-  return res;
 };
+
