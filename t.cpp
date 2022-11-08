@@ -1,13 +1,12 @@
 class Solution {
 public:
-    vector<int> twoSum(vector<int>& numbers, int target) {
-        int l = 0, r = numbers.size() - 1;
-        while (l < r) {
-            int s = numbers[l] + numbers[r];
-            if (s < target) ++l;
-            else if (s > target) --r;
-            else return {l+1, r+1};
+    void merge(vector<int>& nums1, int m, vector<int>& nums2, int n) {
+        int p1 = m - 1, p2 = n - 1;
+        int k = m + n - 1;
+        while (p1 >= 0 && p2 >= 0) {
+            nums1[k--] = nums1[p1] > nums2[p2] ? nums1[p1--] : nums2[p2--];
         }
-        return {};
+        while (p2 >= 0)
+            nums1[k--] = nums2[p2--];
     }
 };
