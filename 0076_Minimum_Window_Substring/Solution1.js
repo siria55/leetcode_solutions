@@ -3,7 +3,7 @@
  * @param {string} t
  * @return {string}
  */
- var minWindow = function(s, t) {
+var minWindow = function(s, t) {
   if (s.length < t.length)
     return "";
 
