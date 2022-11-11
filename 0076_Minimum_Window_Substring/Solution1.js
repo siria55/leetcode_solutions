@@ -3,37 +3,38 @@
  * @param {string} t
  * @return {string}
  */
-var minWindow = function(s, t) {
+ var minWindow = function(s, t) {
   if (s.length < t.length)
-    return '';
-  
+    return "";
+
   let counter = Array(128).fill(0);
-  let flags = Array(128).fill(false);
-  for (let i = 0; i < t.length; ++i) {
-    counter[t.charCodeAt(i)]++;
-    flags[t.charCodeAt(i)] = true;
+  let flag = Array(128).fill(false);
+  for (const ch of t) {
+    counter[ch.charCodeAt(0)]++;
+    flag[ch.charCodeAt(0)] = true;
   }
 
   let l = 0;
-  let cnt = 0, start = 0, minSize = s.length + 1;
-  for (let r = 0; r < s.length; ++r) {
-    if (!flags[s.charCodeAt(r)])
+  let cnt = 0, start = 0, minLength = s.length + 1;
+  for (let r = 0; r < s.length; r++) {
+    if (!flag[s.charCodeAt(r)])
       continue;
     if (--counter[s.charCodeAt(r)] >= 0)
-      ++cnt;
-    while (cnt == t.length) {
-      if (minSize > r + 1 - l) {
-        minSize = r + 1 - l;
+      cnt++;
+    while (cnt === t.length) {
+      if (minLength > r + 1 - l) {
+        minLength = r + 1 - l;
         start = l;
       }
-      if (flags[s.charCodeAt(l)] && ++counter[s.charCodeAt(l)]>0)
-        --cnt;
-      ++l;
+      if (flag[s.charCodeAt(l)] && ++counter[s.charCodeAt(l)] > 0)
+        cnt--;
+      l++;
     }
   }
-  return minSize == s.length + 1 ? '' : s.substring(start, start + minSize);
+  return minLength === s.length + 1
+    ? ""
+    : s.substring(start, start + minLength);
 };
-
 
 function test(test_name, s, t, expected) {
   let res = minWindow(s, t);
