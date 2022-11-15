@@ -1,37 +1,42 @@
 /**
- * @param {number} c
+ * @param {string} s
  * @return {boolean}
  */
-var judgeSquareSum = function(c) {
-    let l = 0, r = Math.floor(Math.sqrt(c));
-    while (l <= r) {
-      const s = l * l + r * r;
-      if (s > c)
-        r--;
-      else if (s < c)
-        l++;
-      else
-        return true;
+var validPalindrome = function(s) {
+    function isPal(s, l, r) {
+      while (l < r) {
+        if (s[l++] !== s[r--])
+          return false;
+      }
+      return true;
     }
-    return false;
+
+    let l = 0, r = s.length - 1;
+    while (l < r) {
+      if (s[l] !== s[r])
+        return isPal(s, l+1, r) || isPal(s, l, r-1);
+      l++;
+      r--;
+    }
+    return true;
 };
 
-function test(test_name, c, expected) {
-  let res = judgeSquareSum(c);
-  if (res == expected)
+function test(test_name, s, expected) {
+  const res = validPalindrome(s);
+  if (res === expected)
     console.log(test_name + " succeed");
   else
     console.log(test_name + " fail");
 }
 
-const c1 = 5;
+const s1 = "aba";
 const expected1 = true;
-test("test1", c1, expected1);
+test("test1", s1, expected1);
 
-const c2 = 3;
-const expected2 = false;
-test("test2", c2, expected2);
+const s2 = "abca";
+const expected2 = true;
+test("test2", s2, expected2);
 
-const c3 = 2;
-const expected3 = true;
-test("test3", c3, expected3);
+const s3 = "abc";
+const expected3 = false;
+test("test3", s3, expected3);

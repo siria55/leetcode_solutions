@@ -2,7 +2,7 @@
  * @param {number} c
  * @return {boolean}
  */
- var judgeSquareSum = function(c) {
+var judgeSquareSum = function(c) {
   let l = 0, r = Math.floor(Math.sqrt(c));
   while (l <= r) {
     const s = l * l + r * r;
