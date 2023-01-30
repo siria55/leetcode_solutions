@@ -1,23 +1,30 @@
+import ArrayUtils from './util_js/array.js';
+
 /**
- * @param {number[]} prices
- * @return {number}
+ * @param {number[][]} people
+ * @return {number[][]}
  */
-var maxProfit = function(prices) {
-  let res = 0;
-  for (let i = 1; i < prices.length; ++i) {
-    res += Math.max(0, prices[i] -prices[i-1]);
+var reconstructQueue = function(people) {
+  people.sort((a, b) => {
+    if (a[0] === b[0])
+      return a[1] - b[1];
+    return b[0] - a[0];
+  });
+  let res = [];
+  for (const pair of people) {
+    res.splice(pair[1], 0, pair);
   }
   return res;
 };
 
-function test(test_name, prices, expected) {
-  const res = maxProfit(prices);
-  if (res === expected)
+function test(test_name, people, expected) {
+  const res = reconstructQueue(people);
+  if (ArrayUtils.isEqualArray(res, expected))
     console.log(test_name + ' succeed');
   else
     console.log(test_name + ' fail');
 }
 
-test('test1', [7,1,5,3,6,4], 7);
-test('test2', [1,2,3,4,5], 4);
-test('test3', [7,6,4,3,1], 0);
+const people1 = [[7,0], [4,4], [7,1], [5,0], [6,1], [5,2]];
+const expected1 = [[5,0], [7,0], [5,2], [6,1], [4,4], [7,1]];
+test('test1', people1, expected1)

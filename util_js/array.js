@@ -7,7 +7,7 @@ let isEqualArray = function(arr1, arr2) {
 
   for (let i = 0; i < arr1.length; i++) {
     if (Array.isArray(arr1[i]) && Array.isArray(arr2[i])) {
-      if (!is_equal_array(arr1[i], arr2[i]))
+      if (!isEqualArray(arr1[i], arr2[i]))
         return false;
     } else {
       if (arr1[i] != arr2[i])
@@ -21,5 +21,4 @@ const ArrayUtils = {
   isEqualArray: isEqualArray,
 };
 
-
-export { ArrayUtils };
+export default ArrayUtils;
