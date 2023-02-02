@@ -1,4 +1,4 @@
-import { ArrayUtils } from './utils_js/array.js';
+import ArrayUtils from './utils_js/array.js';
 
 /**
  * @param {string[][]} equations

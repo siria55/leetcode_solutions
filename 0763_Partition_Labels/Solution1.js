@@ -1,4 +1,4 @@
-import { ArrayUtils } from './util_js/array.js';
+import ArrayUtils from './util_js/array.js';
 
 /**
  * @param {string} s

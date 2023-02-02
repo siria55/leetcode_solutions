@@ -1,45 +1,42 @@
+import ArrayUtils from './util_js/array.js';
+
 /**
- * @param {number[]} nums
- * @return {boolean}
+ * @param {number[]} numbers
+ * @param {number} target
+ * @return {number[]}
  */
-var checkPossibility = function(nums) {
-  if (nums.length === 1)
-    return true;
-  let moded = nums[0] > nums[1];
-  for (let i = 1; i < nums.length - 1; ++i) {
-    if (nums[i] <= nums[i+1])
-      continue;
-    if (moded)
-      return false;
-    if (nums[i-1] <= nums[i+1])
-      nums[i] = nums[i+1];
+var twoSum = function(numbers, target) {
+  let l = 0, r = numbers.length - 1;
+  while (l < r) {
+    const s = numbers[l] + numbers[r];
+    if (s == target)
+      return [l+1, r+1];
+    else if (s < target)
+      ++l;
     else
-      nums[i+1] = nums[i];
-    moded = true;
+      --r;
   }
-  return true;
 };
 
-function test(test_name, nums, expected) {
-  let res = checkPossibility(nums);
-  if (res === expected)
+function test(test_name, numbers, target, expected) {
+  const res = twoSum(numbers, target);
+  if (ArrayUtils.isEqualArray(res, expected))
     console.log(test_name + ' succeed');
   else
-    console.log(test_name + ' fail');
+    console.log(test_name + ' fail')
 }
 
-const nums1 = [4,2,3];
-const expected1 = true;
-test('test1', nums1, expected1);
+const numbers1 = [2,7,11,15];
+const target1 = 9;
+const expected1 = [1,2];
+test('test1', numbers1, target1, expected1);
 
-const nums2 = [4,2,1];
-const expected2 = false;
-test('test2', nums2, expected2);
+const numbers2 = [2,3,4];
+const target2 = 6;
+const expected2 = [1,3];
+test('test2', numbers2, target2, expected2);
 
-const nums3 = [3,4,2,3];
-const expected3 = false;
-test('test3', nums3, expected3);
-
-const nums4 = [1,4,1,2];
-const expected4 = true;
-test('test4', nums4, expected4);
+const numbers3 = [-1, 0];
+const target3 = -1;
+const expected3 = [1,2];
+test('test3', numbers3, target3, expected3);
