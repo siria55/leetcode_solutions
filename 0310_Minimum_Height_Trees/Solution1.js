@@ -1,4 +1,4 @@
-import ArrayUtils from './utils_js/array.js';
+import ArrayUtil from './utils_js/array.js';
 
 /**
  * @param {number} n
@@ -40,7 +40,7 @@ var findMinHeightTrees = function(n, edges) {
 
 function test(testName, n, edges, expected) {
   let res = findMinHeightTrees(n, edges);
-  if (ArrayUtils.isEqualArray(res, expected))
+  if (ArrayUtil.isEqualArray(res, expected))
     console.log(testName + ' success.');
   else
     console.log(testName + ' failed.');

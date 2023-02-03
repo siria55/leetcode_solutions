@@ -1,4 +1,4 @@
-import ArrayUtils from './utils_js/array.js';
+import ArrayUtil from './utils_js/array.js';
 
 /**
  * @param {string[][]} tickets
@@ -32,7 +32,7 @@ var findItinerary = function(tickets) {
 
 function test(testName, tickets, expected) {
   let res = findItinerary(tickets);
-  if (ArrayUtils.isEqualArray(res, expected))
+  if (ArrayUtil.isEqualArray(res, expected))
     console.log(testName + ' success.');
   else
     console.log(testName + ' failed.');

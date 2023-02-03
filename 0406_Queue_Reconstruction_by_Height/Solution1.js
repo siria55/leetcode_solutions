@@ -1,4 +1,4 @@
-import ArrayUtils from './util_js/array.js';
+import ArrayUtil from './util_js/array.js';
 
 /**
  * @param {number[][]} people
@@ -19,7 +19,7 @@ var reconstructQueue = function(people) {
 
 function test(test_name, people, expected) {
   const res = reconstructQueue(people);
-  if (ArrayUtils.isEqualArray(res, expected))
+  if (ArrayUtil.isEqualArray(res, expected))
     console.log(test_name + ' succeed');
   else
     console.log(test_name + ' fail');

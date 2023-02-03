@@ -1,4 +1,4 @@
-import ArrayUtils from './utils_js/array.js';
+import ArrayUtil from './utils_js/array.js';
 
 /**
  * @param {number} numCourses
@@ -47,7 +47,7 @@ var findOrder = function(numCourses, prerequisites) {
 
 function test(testName, numCourses, prerequisite, expectedArr) {
   let res = findOrder(numCourses, prerequisite);
-  if (expectedArr.find(arr => ArrayUtils.isEqualArray(arr, res)))
+  if (expectedArr.find(arr => ArrayUtil.isEqualArray(arr, res)))
     console.log(testName + ' success.');
   else
     console.log(testName + ' failed.');

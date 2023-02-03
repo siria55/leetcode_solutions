@@ -1,4 +1,4 @@
-import ArrayUtils from './utils_js/array.js';
+import ArrayUtil from './utils_js/array.js';
 
 /**
  * @param {number[][]} edges
@@ -21,7 +21,7 @@ var findRedundantConnection = function(edges) {
 
 function test(testName, edges, expected) {
   let res = findRedundantConnection(edges);
-  if (ArrayUtils.isEqualArray(res, expected))
+  if (ArrayUtil.isEqualArray(res, expected))
     console.log(testName + ' success.');
   else
     console.log(testName + ' failed.');

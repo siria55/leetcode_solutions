@@ -1,4 +1,4 @@
-import ArrayUtils from './utils_js/array.js';
+import ArrayUtil from './utils_js/array.js';
 
 /**
  * @param {string[][]} equations
@@ -59,7 +59,7 @@ var calcEquation = function(equations, values, queries) {
 
 function test(testName, equations, values, queries, expected) {
   let res = calcEquation(equations, values, queries);
-  if (ArrayUtils.isEqualArray(res, expected))
+  if (ArrayUtil.isEqualArray(res, expected))
     console.log(testName + ' success.');
   else
     console.log(testName + ' failed.');

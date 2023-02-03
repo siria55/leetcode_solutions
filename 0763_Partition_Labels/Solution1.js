@@ -1,4 +1,4 @@
-import ArrayUtils from './util_js/array.js';
+import ArrayUtil from './util_js/array.js';
 
 /**
  * @param {string} s
@@ -24,7 +24,7 @@ var partitionLabels = function(s) {
 
 function test(test_name, s, expected) {
   const res = partitionLabels(s);
-  if (ArrayUtils.isEqualArray(res, expected))
+  if (ArrayUtil.isEqualArray(res, expected))
     console.log(test_name + ' succeed');
   else
     console.log(test_name + ' fail');

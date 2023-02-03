@@ -17,8 +17,8 @@ let isEqualArray = function(arr1, arr2) {
   return true;
 }
 
-const ArrayUtils = {
+const ArrayUtil = {
   isEqualArray: isEqualArray,
 };
 
-export default ArrayUtils;
+export default ArrayUtil;
