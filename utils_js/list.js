@@ -46,9 +46,10 @@ function printList(list) {
 }
 
 const ListUtils = {
-  isEqualList: isEqualList,
-  printList: printList,
-  buildList: buildList,
+  ListNode,
+  isEqualList,
+  printList,
+  buildList,
 };
 
-export { ListUtils, ListNode };
+export default ListUtils;
